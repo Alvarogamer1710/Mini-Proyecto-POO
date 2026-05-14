@@ -12,7 +12,6 @@ public class GamesMenuView extends JPanel {
 
     public GamesMenuView(Mainframe mainframe) {
         this.mainframe = mainframe;
-        // Usamos BorderLayout para organizar arriba el título, en medio los juegos y abajo el botón de salir
         this.setLayout(new BorderLayout());
         this.setOpaque(false);
         this.setBorder(new EmptyBorder(40, 40, 40, 40));
@@ -21,27 +20,32 @@ public class GamesMenuView extends JPanel {
         Color rojoCasino = new Color(180, 20, 20);     
         Color textoBlanco = Color.WHITE;
 
-        // Título de la sala
         JLabel titulo = new JLabel("✨ SALA VIP ✨");
         titulo.setFont(new Font("Georgia", Font.BOLD, 36));
         titulo.setForeground(doradoFuerte);
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(titulo, BorderLayout.NORTH);
 
-        // Cuadrícula para los juegos (2 filas, 2 columnas)
         JPanel gridJuegos = new JPanel(new GridLayout(2, 2, 20, 20));
-        gridJuegos.setOpaque(false); // Transparente para que se vea la bandera
+        gridJuegos.setOpaque(false); 
         gridJuegos.setBorder(new EmptyBorder(40, 20, 40, 20));
 
-        // Añadimos los botones de juegos a la cuadrícula
         gridJuegos.add(crearBotonJuego("RULETA", "🔴", doradoFuerte, textoBlanco));
         gridJuegos.add(crearBotonJuego("BLACKJACK", "♠️", doradoFuerte, textoBlanco));
         gridJuegos.add(crearBotonJuego("TRAGAPERRAS", "🍒", doradoFuerte, textoBlanco));
-        gridJuegos.add(crearBotonJuego("PÓKER", "🃏", doradoFuerte, textoBlanco));
+        
+        // BOTÓN ACTUALIZADO: Pasapalabra con lógica de navegación
+        JButton btnPasapalabra = crearBotonJuego("PASAPALABRA", "🔠", doradoFuerte, textoBlanco);
+        btnPasapalabra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainframe.mostrarPantalla("PantallaPasapalabra");
+            }
+        });
+        gridJuegos.add(btnPasapalabra);
 
         this.add(gridJuegos, BorderLayout.CENTER);
 
-        // Botón para cerrar sesión y volver atrás
         JButton btnSalir = new JButton("🚪 COBRAR FICHAS Y SALIR");
         btnSalir.setFont(new Font("Georgia", Font.BOLD, 16));
         btnSalir.setBackground(rojoCasino);
@@ -53,7 +57,6 @@ public class GamesMenuView extends JPanel {
         btnSalir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Volvemos a la pantalla de login
                 mainframe.mostrarPantalla("PantallaLogin");
             }
         });
@@ -61,11 +64,10 @@ public class GamesMenuView extends JPanel {
         this.add(btnSalir, BorderLayout.SOUTH);
     }
 
-    // Método para crear botones de juegos con un estilo uniforme
     private JButton crearBotonJuego(String nombre, String icono, Color borde, Color texto) {
         JButton btn = new JButton(icono + " " + nombre);
         btn.setFont(new Font("Georgia", Font.BOLD, 18));
-        btn.setBackground(new Color(20, 20, 20, 220)); // Fondo oscuro semi-transparente
+        btn.setBackground(new Color(20, 20, 20, 220)); 
         btn.setForeground(texto);
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -73,7 +75,6 @@ public class GamesMenuView extends JPanel {
         return btn;
     }
 
-    // Mantenemos el mismo fondo de la bandera patriota y el marco de casino
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

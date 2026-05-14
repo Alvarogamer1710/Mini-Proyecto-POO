@@ -5,31 +5,28 @@ import java.awt.*;
 
 public class Mainframe extends JFrame {
 
-    // Declaramos el CardLayout y el panel principal a nivel de clase para poder usarlos
     private CardLayout cardLayout;
     private JPanel mainPanel;
 
     public Mainframe() {
-        // Inicializamos el gestor de cartas y el panel que las contendrá
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         
-        this.setSize(550, 650);
+        // ¡OJO AQUÍ! He ampliado el tamaño a 650x700 para que quepa bien el rosco entero
+        this.setSize(650, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("🎰 Salón de Juego de Aranjuez 🎰");
         this.setLocationRelativeTo(null); 
 
-        // Añadimos las dos "cartas" (vistas) a nuestra baraja
-        // Le pasamos 'this' (el Mainframe) para que las vistas puedan decirle que cambie de pantalla
+        // Añadimos las tres "cartas" (vistas) a nuestra baraja
         mainPanel.add(new LoginView(this), "PantallaLogin");
         mainPanel.add(new GamesMenuView(this), "PantallaMenu");
+        mainPanel.add(new PasapalabraView(this), "PantallaPasapalabra");
 
-        // Añadimos el contenedor principal a la ventana
         this.add(mainPanel);
         this.setVisible(true);
     }
     
-    // Este es el método mágico que las vistas llamarán para cambiar de pantalla
     public void mostrarPantalla(String nombrePantalla) {
         cardLayout.show(mainPanel, nombrePantalla);
     }
