@@ -8,12 +8,11 @@ public class Mainframe extends JFrame {
     public Mainframe() {
         this.setLayout(new CardLayout());
         
-        // Lo hacemos un poco más grande para que respire el diseño
-        this.setSize(450, 550);
+        // Un poco más grande para que quepa todo el glamour
+        this.setSize(500, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("✨ TUS JUEGOS ✨");
+        this.setTitle("🎰 Salón de Juego de Aranjuez 🎰");
         
-        // Que se centre en la pantalla al abrir
         this.setLocationRelativeTo(null); 
 
         this.add(new LoginView());

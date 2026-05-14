@@ -12,52 +12,59 @@ public class LoginView extends JPanel {
     public LoginView() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        // Colores estilo TikTok
-        Color fondoOscuro = new Color(20, 20, 20);
-        Color rosaNeon = new Color(254, 44, 85);
-        Color cianNeon = new Color(37, 244, 238);
+        // Paleta de colores VIP Casino
+        Color fondoNegro = new Color(15, 15, 15);      // Negro casi puro
+        Color doradoFuerte = new Color(212, 175, 55);  // Dorado metálico
+        Color rojoCasino = new Color(180, 20, 20);     // Rojo tapete de cartas/ruleta
         Color textoBlanco = Color.WHITE;
 
-        // Aplicamos el fondo y unos márgenes
-        this.setBackground(fondoOscuro);
-        this.setBorder(new EmptyBorder(40, 40, 40, 40));
+        // Fondo y márgenes
+        this.setBackground(fondoNegro);
+        this.setBorder(new EmptyBorder(50, 40, 50, 40));
 
-        // Título llamativo
-        JLabel titulo = new JLabel("🔥 ¡VAMOS A JUGAR! 🔥");
-        titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 28));
-        titulo.setForeground(textoBlanco);
+        // Letrero principal del Casino
+        JLabel titulo = new JLabel("🃏 SALÓN DE JUEGO 🃏");
+        titulo.setFont(new Font("Georgia", Font.BOLD, 30)); // Fuente con serifas, más clásica
+        titulo.setForeground(doradoFuerte);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        JLabel subtitulo = new JLabel("DE ARANJUEZ");
+        subtitulo.setFont(new Font("Georgia", Font.BOLD, 24));
+        subtitulo.setForeground(rojoCasino);
+        subtitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Etiquetas
-        JLabel usuariol = new JLabel("👾 USUARIO:");
-        usuariol.setFont(new Font("Arial", Font.BOLD, 18));
-        usuariol.setForeground(cianNeon);
+        JLabel usuariol = new JLabel("Nombre del Jugador:");
+        usuariol.setFont(new Font("Georgia", Font.ITALIC, 18));
+        usuariol.setForeground(doradoFuerte);
         usuariol.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel contrasena = new JLabel("🔒 CONTRASEÑA:");
-        contrasena.setFont(new Font("Arial", Font.BOLD, 18));
-        contrasena.setForeground(rosaNeon);
+        JLabel contrasena = new JLabel("Código de Acceso:");
+        contrasena.setFont(new Font("Georgia", Font.ITALIC, 18));
+        contrasena.setForeground(doradoFuerte);
         contrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Campos de texto
+        // Campos de texto estilo VIP
         usuario = new JTextField(15);
-        estilizarCampo(usuario, cianNeon, fondoOscuro, textoBlanco);
+        estilizarCampo(usuario, doradoFuerte, fondoNegro, textoBlanco);
 
         password = new JPasswordField(15);
-        estilizarCampo(password, rosaNeon, fondoOscuro, textoBlanco);
+        estilizarCampo(password, doradoFuerte, fondoNegro, textoBlanco);
 
-        // Botón gigante para jugar
-        JButton botonJugar = new JButton("▶ JUGAR ▶");
-        botonJugar.setFont(new Font("Arial", Font.BOLD, 24));
-        botonJugar.setBackground(rosaNeon);
+        // Botón de "Apostar"
+        JButton botonJugar = new JButton("🎲 ENTRAR AL CASINO 🎲");
+        botonJugar.setFont(new Font("Georgia", Font.BOLD, 20));
+        botonJugar.setBackground(rojoCasino);
         botonJugar.setForeground(textoBlanco);
         botonJugar.setFocusPainted(false);
         botonJugar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        botonJugar.setMaximumSize(new Dimension(250, 50));
+        botonJugar.setMaximumSize(new Dimension(300, 55));
         botonJugar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        botonJugar.setBorder(BorderFactory.createLineBorder(doradoFuerte, 2));
 
-        // Añadimos los componentes con espaciado (struts) para que quede limpio
+        // Ensamblamos la vista
         this.add(titulo);
+        this.add(subtitulo);
         this.add(Box.createVerticalStrut(40));
         
         this.add(usuariol);
@@ -74,15 +81,18 @@ public class LoginView extends JPanel {
         this.add(botonJugar);
     }
 
-    // Método auxiliar para no repetir código al poner bonitos los campos de texto
+    // Método para estandarizar los campos
     private void estilizarCampo(JTextField campo, Color colorBorde, Color colorFondo, Color colorTexto) {
-        campo.setMaximumSize(new Dimension(250, 40));
-        campo.setPreferredSize(new Dimension(250, 40));
-        campo.setFont(new Font("Arial", Font.BOLD, 16));
+        campo.setMaximumSize(new Dimension(280, 45));
+        campo.setPreferredSize(new Dimension(280, 45));
+        campo.setFont(new Font("Georgia", Font.PLAIN, 18));
         campo.setBackground(colorFondo);
         campo.setForeground(colorTexto);
-        campo.setCaretColor(Color.WHITE); // El palito que parpadea al escribir
-        campo.setBorder(BorderFactory.createLineBorder(colorBorde, 3, true)); // Borde grueso
-        campo.setHorizontalAlignment(JTextField.CENTER); // Texto centrado
+        campo.setCaretColor(colorTexto); 
+        campo.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(colorBorde, 2, false), // Borde dorado recto (más serio)
+                BorderFactory.createEmptyBorder(5, 10, 5, 10) // Margen interior para que el texto no se pegue
+        ));
+        campo.setHorizontalAlignment(JTextField.CENTER);
     }
 }
