@@ -36,7 +36,7 @@ public class GamesMenuView extends JPanel {
             try {
                 PasapalabraView vistaRosco = new PasapalabraView(mainframe);
                 PasapalabraModel modeloRosco = new PasapalabraModel();
-                new PasapalabraController(vistaRosco, modeloRosco);
+                new PasapalabraController(vistaRosco, modeloRosco, mainframe);
                 
                 mainframe.agregarPantalla(vistaRosco, "PantallaPasapalabraMVC");
                 mainframe.mostrarPantalla("PantallaPasapalabraMVC");
@@ -56,7 +56,10 @@ public class GamesMenuView extends JPanel {
         btnSalir.setFocusPainted(false);
         btnSalir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        btnSalir.addActionListener(e -> mainframe.mostrarPantalla("PantallaLogin"));
+        btnSalir.addActionListener(e -> {
+            mainframe.setUsuarioLogueado(null);
+            mainframe.mostrarPantalla("PantallaLogin");
+        });
         this.add(btnSalir, BorderLayout.SOUTH);
     }
 

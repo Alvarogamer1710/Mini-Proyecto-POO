@@ -11,18 +11,14 @@ public class PasapalabraModel {
     public PasapalabraModel() {
         rosco = new ArrayList<>();
         indiceActual = 0;
-        
-        // Un buen try-catch en la inicialización de datos siempre es buena práctica
         try {
             cargarPreguntasReales();
         } catch (Exception e) {
-            System.err.println("Error crítico al cargar la base de datos de preguntas: " + e.getMessage());
-            // En un entorno real, aquí podríamos cargar un archivo de backup o avisar a la vista
+            System.err.println("Error crítico al cargar las preguntas: " + e.getMessage());
         }
     }
 
     private void cargarPreguntasReales() throws Exception {
-        // Diccionario completo de 26 letras. (A-Z, sin W)
         rosco.add(new Pregunta("A", "Empieza por A: Conjunto de instrucciones sistemáticas y finitas para resolver un problema, muy usado en programación.", "Algoritmo"));
         rosco.add(new Pregunta("B", "Empieza por B: Sistema de numeración utilizado por los procesadores que solo emplea los dígitos 0 y 1.", "Binario"));
         rosco.add(new Pregunta("C", "Empieza por C: Órgano vital de los vertebrados que bombea la sangre a todo el cuerpo.", "Corazón"));
@@ -50,9 +46,8 @@ public class PasapalabraModel {
         rosco.add(new Pregunta("Y", "Empieza por Y: Embarcación de recreo a vela o a motor, normalmente de lujo.", "Yate"));
         rosco.add(new Pregunta("Z", "Empieza por Z: Calzado que no pasa del tobillo, con la parte inferior de suela y el resto de cuero, tela u otro material.", "Zapato"));
         
-        // Validación de seguridad para que la vista no pete si nos faltan letras
         if (rosco.size() != 26) {
-            throw new Exception("El rosco no contiene exactamente 26 preguntas. Letras cargadas: " + rosco.size());
+            throw new Exception("El rosco no contiene exactamente 26 preguntas.");
         }
     }
 
@@ -67,22 +62,19 @@ public class PasapalabraModel {
 
     public boolean comprobarRespuesta(String respuestaUsuario) {
         Pregunta actual = getPreguntaActual();
-        
-        // Normalizamos ambas palabras para que tildes y mayúsculas/minúsculas no sean un problema
         String respuestaLimpia = normalizarTexto(respuestaUsuario);
         String correctaLimpia = normalizarTexto(actual.getRespuestaCorrecta());
 
         if (correctaLimpia.equalsIgnoreCase(respuestaLimpia)) {
-            actual.setEstado(1); // Acierto
+            actual.setEstado(1); 
             return true;
         } else {
-            actual.setEstado(2); // Fallo
+            actual.setEstado(2); 
             return false;
         }
     }
 
     public void pasarPalabra() {
-        // Si el jugador salta, el estado se queda en 0 (Pendiente) para la próxima vuelta
     }
 
     public boolean avanzarSiguientePendiente() {
@@ -90,31 +82,25 @@ public class PasapalabraModel {
         do {
             indiceActual++;
             if (indiceActual >= rosco.size()) {
-                indiceActual = 0; // Damos la vuelta al rosco si llegamos a la Z
+                indiceActual = 0; 
             }
             if (rosco.get(indiceActual).getEstado() == 0) {
-                return true; // Hemos encontrado la siguiente letra que aún está pendiente
+                return true; 
             }
         } while (indiceActual != inicio);
         
-        return false; // Si llegamos aquí, el rosco se ha terminado por completo
+        return false; 
     }
 
-    /**
-     * Función mágica para limpiar textos:
-     * Quita acentos, diéresis y espacios en blanco extra para facilitar la validación.
-     */
     private String normalizarTexto(String texto) {
         if (texto == null) return "";
-        // Quitamos espacios por delante y detrás
         String limpio = texto.trim(); 
-        
-        // Normalizamos los caracteres (ej: separa la 'á' en 'a' + '´')
         limpio = Normalizer.normalize(limpio, Normalizer.Form.NFD);
-        
-        // Borramos todos los símbolos de puntuación/acentuación resultantes
         limpio = limpio.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        
         return limpio;
+    }
+
+    public List<Pregunta> getRosco() {
+        return rosco;
     }
 }

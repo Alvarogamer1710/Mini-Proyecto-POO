@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import Modelo.Usuario;
 
 public class PasapalabraView extends JPanel {
 
@@ -25,11 +26,24 @@ public class PasapalabraView extends JPanel {
         this.setBackground(new Color(245, 247, 250));
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
 
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setOpaque(false);
+
         JLabel titulo = new JLabel("Pasapalabra");
         titulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
         titulo.setForeground(new Color(50, 50, 50));
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(titulo, BorderLayout.NORTH);
+        topPanel.add(titulo, BorderLayout.CENTER);
+
+        Usuario u = mainframe.getUsuarioLogueado();
+        String statsTxt = (u != null) ? "Última partida: " + u.getUltimosAciertos() + "✔ " + u.getUltimosFallos() + "✖" : "";
+        JLabel statsLabel = new JLabel(statsTxt);
+        statsLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        statsLabel.setForeground(new Color(100, 100, 100));
+        statsLabel.setBorder(new EmptyBorder(0, 0, 0, 20)); 
+        topPanel.add(statsLabel, BorderLayout.EAST);
+
+        this.add(topPanel, BorderLayout.NORTH);
 
         JPanel gameArea = new JPanel(new BorderLayout());
         gameArea.setOpaque(false);

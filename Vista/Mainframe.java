@@ -2,13 +2,19 @@ package Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import Modelo.GestorUsuarios;
+import Modelo.Usuario;
 
 public class Mainframe extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
+    private GestorUsuarios gestorUsuarios;
+    private Usuario usuarioLogueado;
 
     public Mainframe() {
+        gestorUsuarios = new GestorUsuarios();
+        
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         
@@ -24,21 +30,22 @@ public class Mainframe extends JFrame {
         this.setVisible(true);
     }
     
-    public void mostrarPantalla(String nombrePantalla) {
-        cardLayout.show(mainPanel, nombrePantalla);
+    public void mostrarPantalla(String nombrePantalla) { 
+        cardLayout.show(mainPanel, nombrePantalla); 
     }
-
-    // NUEVO MÉTODO: Seguro para añadir vistas desde otros paneles
-    public void agregarPantalla(JPanel panel, String nombrePantalla) {
-        mainPanel.add(panel, nombrePantalla);
+    
+    public void agregarPantalla(JPanel panel, String nombrePantalla) { 
+        mainPanel.add(panel, nombrePantalla); 
     }
+    
+    public GestorUsuarios getGestorUsuarios() { return gestorUsuarios; }
+    public Usuario getUsuarioLogueado() { return usuarioLogueado; }
+    public void setUsuarioLogueado(Usuario usuario) { this.usuarioLogueado = usuario; }
 
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        try { 
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
+        } catch (Exception e) {}
         new Mainframe();
     }
 }
