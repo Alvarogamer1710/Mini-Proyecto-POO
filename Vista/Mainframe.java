@@ -12,16 +12,13 @@ public class Mainframe extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         
-        // ¡OJO AQUÍ! He ampliado el tamaño a 650x700 para que quepa bien el rosco entero
-        this.setSize(650, 700);
+        this.setSize(600, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("🎰 Salón de Juego de Aranjuez 🎰");
+        this.setTitle("Plataforma de Juegos");
         this.setLocationRelativeTo(null); 
 
-        // Añadimos las tres "cartas" (vistas) a nuestra baraja
         mainPanel.add(new LoginView(this), "PantallaLogin");
         mainPanel.add(new GamesMenuView(this), "PantallaMenu");
-        mainPanel.add(new PasapalabraView(this), "PantallaPasapalabra");
 
         this.add(mainPanel);
         this.setVisible(true);
@@ -31,7 +28,17 @@ public class Mainframe extends JFrame {
         cardLayout.show(mainPanel, nombrePantalla);
     }
 
+    // NUEVO MÉTODO: Seguro para añadir vistas desde otros paneles
+    public void agregarPantalla(JPanel panel, String nombrePantalla) {
+        mainPanel.add(panel, nombrePantalla);
+    }
+
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         new Mainframe();
     }
 }

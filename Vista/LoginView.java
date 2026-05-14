@@ -3,134 +3,89 @@ package Vista;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginView extends JPanel {
 
     JTextField usuario;
     JPasswordField password;
-    Mainframe mainframe; // Guardamos la referencia a la ventana principal
+    Mainframe mainframe;
 
     public LoginView(Mainframe mainframe) {
-        this.mainframe = mainframe; // La recibimos por el constructor
+        this.mainframe = mainframe; 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setOpaque(false);
-        this.setBorder(new EmptyBorder(60, 40, 50, 40));
+        this.setBackground(new Color(245, 247, 250)); 
+        this.setBorder(new EmptyBorder(100, 80, 80, 80));
 
-        Color doradoFuerte = new Color(212, 175, 55);  
-        Color rojoCasino = new Color(180, 20, 20);     
-        Color textoBlanco = Color.WHITE;
-        Color fondoComponentesOscuro = new Color(20, 20, 20, 220); 
+        Color azulPrimario = new Color(33, 150, 243);
+        Color textoOscuro = new Color(50, 50, 50);
 
-        JLabel titulo = new JLabel("🃏 SALÓN DE JUEGO 🃏");
-        titulo.setFont(new Font("Georgia", Font.BOLD, 30)); 
-        titulo.setForeground(doradoFuerte);
+        JLabel titulo = new JLabel("Bienvenido");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 32)); 
+        titulo.setForeground(textoOscuro);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        JLabel subtitulo = new JLabel("DE ARANJUEZ");
-        subtitulo.setFont(new Font("Georgia", Font.BOLD, 24));
-        subtitulo.setForeground(rojoCasino);
-        subtitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel usuariol = new JLabel("Nombre del Jugador:");
-        usuariol.setFont(new Font("Georgia", Font.ITALIC, 18));
-        usuariol.setForeground(doradoFuerte);
+        JLabel usuariol = new JLabel("Usuario");
+        usuariol.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        usuariol.setForeground(textoOscuro);
         usuariol.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel contrasena = new JLabel("Código de Acceso:");
-        contrasena.setFont(new Font("Georgia", Font.ITALIC, 18));
-        contrasena.setForeground(doradoFuerte);
+        JLabel contrasena = new JLabel("Contraseña");
+        contrasena.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        contrasena.setForeground(textoOscuro);
         contrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         usuario = new JTextField(15);
-        estilizarCampo(usuario, doradoFuerte, fondoComponentesOscuro, textoBlanco);
+        estilizarCampo(usuario);
 
         password = new JPasswordField(15);
-        estilizarCampo(password, doradoFuerte, fondoComponentesOscuro, textoBlanco);
+        estilizarCampo(password);
 
-        JButton botonJugar = new JButton("🎲 ENTRAR AL CASINO 🎲");
-        botonJugar.setFont(new Font("Georgia", Font.BOLD, 20));
-        botonJugar.setBackground(rojoCasino);
-        botonJugar.setForeground(textoBlanco);
+        JButton botonJugar = new JButton("Iniciar Sesión");
+        botonJugar.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        botonJugar.setBackground(azulPrimario);
+        botonJugar.setForeground(Color.WHITE);
         botonJugar.setFocusPainted(false);
         botonJugar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        botonJugar.setMaximumSize(new Dimension(300, 55));
+        botonJugar.setMaximumSize(new Dimension(300, 45));
         botonJugar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        botonJugar.setBorder(BorderFactory.createLineBorder(doradoFuerte, 2));
 
-        // --- LÓGICA DEL BOTÓN AÑADIDA AQUÍ ---
-        botonJugar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String user = usuario.getText();
-                String pass = new String(password.getPassword());
+        botonJugar.addActionListener(e -> {
+            String user = usuario.getText();
+            String pass = new String(password.getPassword());
 
-                // Comprobamos credenciales de prueba
-                if (user.equals("admin") && pass.equals("1234")) {
-                    // ¡Login correcto! Limpiamos los campos y cambiamos a la pantalla del menú
-                    usuario.setText("");
-                    password.setText("");
-                    mainframe.mostrarPantalla("PantallaMenu");
-                } else {
-                    // Login fallido: Mostramos un mensaje de error estilo casino
-                    JOptionPane.showMessageDialog(LoginView.this, 
-                        "Acceso denegado. La seguridad del casino no reconoce esas credenciales.", 
-                        "Error de Seguridad", 
-                        JOptionPane.ERROR_MESSAGE);
-                }
+            if (user.equals("admin") && pass.equals("1234")) {
+                usuario.setText("");
+                password.setText("");
+                mainframe.mostrarPantalla("PantallaMenu");
+            } else {
+                JOptionPane.showMessageDialog(LoginView.this, 
+                    "Credenciales incorrectas.", 
+                    "Error de autenticación", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         });
 
         this.add(titulo);
-        this.add(subtitulo);
-        this.add(Box.createVerticalStrut(40));
-        this.add(usuariol);
-        this.add(Box.createVerticalStrut(10));
-        this.add(usuario);
-        this.add(Box.createVerticalStrut(30));
-        this.add(contrasena);
-        this.add(Box.createVerticalStrut(10));
-        this.add(password);
         this.add(Box.createVerticalStrut(60));
+        this.add(usuariol);
+        this.add(Box.createVerticalStrut(5));
+        this.add(usuario);
+        this.add(Box.createVerticalStrut(20));
+        this.add(contrasena);
+        this.add(Box.createVerticalStrut(5));
+        this.add(password);
+        this.add(Box.createVerticalStrut(50));
         this.add(botonJugar);
     }
 
-    private void estilizarCampo(JTextField campo, Color colorBorde, Color colorFondo, Color colorTexto) {
-        campo.setMaximumSize(new Dimension(300, 45));
-        campo.setPreferredSize(new Dimension(300, 45));
-        campo.setFont(new Font("Georgia", Font.PLAIN, 18));
-        campo.setBackground(colorFondo);
-        campo.setForeground(colorTexto);
-        campo.setCaretColor(colorTexto); 
+    private void estilizarCampo(JTextField campo) {
+        campo.setMaximumSize(new Dimension(300, 40));
+        campo.setPreferredSize(new Dimension(300, 40));
+        campo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         campo.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(colorBorde, 2, false), 
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1), 
                 BorderFactory.createEmptyBorder(5, 10, 5, 10) 
         ));
         campo.setHorizontalAlignment(JTextField.CENTER);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        int ancho = getWidth();
-        int alto = getHeight();
-        Color rojoEspana = new Color(173, 21, 25);
-        Color amarilloEspana = new Color(250, 201, 34);
-
-        g2d.setColor(rojoEspana);
-        g2d.fillRect(0, 0, ancho, alto / 4);
-        g2d.setColor(amarilloEspana);
-        g2d.fillRect(0, alto / 4, ancho, alto / 2);
-        g2d.setColor(rojoEspana);
-        g2d.fillRect(0, (alto / 4) * 3, ancho, alto / 4);
-
-        g2d.setColor(new Color(15, 15, 15, 210)); 
-        g2d.fillRoundRect(20, 20, ancho - 40, alto - 40, 30, 30); 
-        g2d.setColor(new Color(212, 175, 55));
-        g2d.setStroke(new BasicStroke(3));
-        g2d.drawRoundRect(20, 20, ancho - 40, alto - 40, 30, 30);
     }
 }
