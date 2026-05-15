@@ -41,7 +41,7 @@ public class PasapalabraModel {
         rosco.add(new Pregunta("S", "Empieza por S: Estrella luminosa, centro de nuestro sistema planetario.", "Sol"));
         rosco.add(new Pregunta("T", "Empieza por T: Periférico de entrada provisto de teclas, fundamental para escribir en el ordenador.", "Teclado"));
         rosco.add(new Pregunta("U", "Empieza por U: Conjunto de todo lo que tiene existencia física, en la Tierra y fuera de ella.", "Universo"));
-        rosco.add(new Pregunta("V", "Empieza por V: Software malicioso que tiene por objeto alterar el funcionamiento normal del ordenador sin el permiso del usuario.", "Virus"));
+        rosco.add(new Pregunta("V", "Empieza por V: Nombre de la profesora icónica de la asignatura de Programación Orientada a Objetos.", "Vanessa"));
         rosco.add(new Pregunta("X", "Contiene la X: Coche de alquiler con conductor, provisto de taxímetro, que presta un servicio público.", "Taxi"));
         rosco.add(new Pregunta("Y", "Empieza por Y: Embarcación de recreo a vela o a motor, normalmente de lujo.", "Yate"));
         rosco.add(new Pregunta("Z", "Empieza por Z: Calzado que no pasa del tobillo, con la parte inferior de suela y el resto de cuero, tela u otro material.", "Zapato"));
