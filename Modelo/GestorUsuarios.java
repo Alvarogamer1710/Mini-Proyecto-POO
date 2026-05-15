@@ -19,20 +19,17 @@ public class GestorUsuarios {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String linea;
             while ((linea = br.readLine()) != null) {
-                String[] partes = linea.split(";");
-                // Compatibilidad: Si tiene 4 partes es antiguo (sin tiempo), si tiene 5 es nuevo
-                if (partes.length == 4 || partes.length == 5) {
-                    int aciertos = Integer.parseInt(partes[2]);
-                    int fallos = Integer.parseInt(partes[3]);
-                    int mejorTiempo = (partes.length == 5) ? Integer.parseInt(partes[4]) : 0;
-                    
-                    Usuario u = new Usuario(partes[0], partes[1], aciertos, fallos, mejorTiempo);
-                    usuarios.put(u.getUsername(), u);
-                }
+                String[] p = linea.split(";");
+                // Soporta formatos antiguos (4 o 5 partes) y el nuevo de 6
+                int aciertos = (p.length >= 3) ? Integer.parseInt(p[2]) : 0;
+                int fallos = (p.length >= 4) ? Integer.parseInt(p[3]) : 0;
+                int tiempoBusca = (p.length >= 5) ? Integer.parseInt(p[4]) : 0;
+                int puntosSnake = (p.length >= 6) ? Integer.parseInt(p[5]) : 0;
+                
+                Usuario u = new Usuario(p[0], p[1], aciertos, fallos, tiempoBusca, puntosSnake);
+                usuarios.put(u.getUsername(), u);
             }
-        } catch (IOException e) {
-            System.err.println("Error al cargar usuarios: " + e.getMessage());
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public void guardarUsuarios() {
@@ -41,16 +38,12 @@ public class GestorUsuarios {
                 bw.write(u.toString());
                 bw.newLine();
             }
-        } catch (IOException e) {
-            System.err.println("Error al guardar usuarios: " + e.getMessage());
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public boolean registrarUsuario(String username, String password) {
-        if (usuarios.containsKey(username)) {
-            return false;
-        }
-        Usuario nuevo = new Usuario(username, password, 0, 0, 0); // 0 segundos al crear
+        if (usuarios.containsKey(username)) return false;
+        Usuario nuevo = new Usuario(username, password, 0, 0, 0, 0);
         usuarios.put(username, nuevo);
         guardarUsuarios();
         return true;
@@ -58,9 +51,6 @@ public class GestorUsuarios {
 
     public Usuario validarUsuario(String username, String password) {
         Usuario u = usuarios.get(username);
-        if (u != null && u.getPassword().equals(password)) {
-            return u;
-        }
-        return null;
+        return (u != null && u.getPassword().equals(password)) ? u : null;
     }
 }
