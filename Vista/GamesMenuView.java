@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import Modelo.PasapalabraModel;
 import Controlador.PasapalabraController;
+import Modelo.BuscaminasModel;
+import Controlador.BuscaminasController;
 
 public class GamesMenuView extends JPanel {
 
@@ -29,7 +31,23 @@ public class GamesMenuView extends JPanel {
 
         gridJuegos.add(crearBotonJuego("Ruleta", "🎡"));
         gridJuegos.add(crearBotonJuego("Cartas", "🃏"));
-        gridJuegos.add(crearBotonJuego("Buscaminas", "💣"));
+        
+        JButton btnBuscaminas = crearBotonJuego("Buscaminas", "💣");
+        btnBuscaminas.addActionListener(e -> {
+            try {
+                BuscaminasModel modeloBusca = new BuscaminasModel();
+                BuscaminasView vistaBusca = new BuscaminasView(mainframe, modeloBusca.getFilas(), modeloBusca.getColumnas());
+                // Pasamos el mainframe al controlador para guardar el tiempo
+                new BuscaminasController(vistaBusca, modeloBusca, mainframe);
+                
+                mainframe.agregarPantalla(vistaBusca, "PantallaBuscaminasMVC");
+                mainframe.mostrarPantalla("PantallaBuscaminasMVC");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        });
+        gridJuegos.add(btnBuscaminas);
         
         JButton btnPasapalabra = crearBotonJuego("Pasapalabra", "🔠");
         btnPasapalabra.addActionListener(e -> {

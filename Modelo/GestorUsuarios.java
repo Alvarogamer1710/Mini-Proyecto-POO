@@ -14,14 +14,19 @@ public class GestorUsuarios {
 
     private void cargarUsuarios() {
         File file = new File(ARCHIVO);
-        if (!file.exists()) return; // Si no existe, no cargamos nada
+        if (!file.exists()) return;
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(";");
-                if (partes.length == 4) {
-                    Usuario u = new Usuario(partes[0], partes[1], Integer.parseInt(partes[2]), Integer.parseInt(partes[3]));
+                // Compatibilidad: Si tiene 4 partes es antiguo (sin tiempo), si tiene 5 es nuevo
+                if (partes.length == 4 || partes.length == 5) {
+                    int aciertos = Integer.parseInt(partes[2]);
+                    int fallos = Integer.parseInt(partes[3]);
+                    int mejorTiempo = (partes.length == 5) ? Integer.parseInt(partes[4]) : 0;
+                    
+                    Usuario u = new Usuario(partes[0], partes[1], aciertos, fallos, mejorTiempo);
                     usuarios.put(u.getUsername(), u);
                 }
             }
@@ -43,9 +48,9 @@ public class GestorUsuarios {
 
     public boolean registrarUsuario(String username, String password) {
         if (usuarios.containsKey(username)) {
-            return false; // El usuario ya existe
+            return false;
         }
-        Usuario nuevo = new Usuario(username, password, 0, 0);
+        Usuario nuevo = new Usuario(username, password, 0, 0, 0); // 0 segundos al crear
         usuarios.put(username, nuevo);
         guardarUsuarios();
         return true;
